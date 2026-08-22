@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Help | TalenTrade{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>💡 Need Help?</h2>
+  <p>We’ve got you covered! Here are some quick guides and FAQs to help you use <strong>TalenTrade</strong> effectively.</p>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>🔑 Getting Started</h3>
+    <ul>
+      <li>Create an account or login to your profile.</li>
+      <li>Add the skills you can teach and the ones you want to learn.</li>
+      <li>Go to <strong>Find Matches</strong> to connect with others.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>❓ Frequently Asked Questions</h3>
+    <ul>
+      <li><strong>How do I update my skills?</strong><br>
+      Go to your <a href="{{ url_for('profile') }}">Profile</a> and click <strong>Edit Skills</strong>.</li>
+      <li><strong>Why is my logo not showing?</strong><br>
+      Make sure the logo file is in the <code>/static</code> folder and correctly linked in <code>base.html</code>.</li>
+      <li><strong>How can I message my match?</strong><br>
+      Use the <strong>Message</strong> button on the Match page to connect.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📚 Learning Resources</h3>
+    <p>Here are some useful links to help you improve your skills:</p>
+    <ul>
+      <li><a href="https://www.coursera.org" target="_blank">Coursera</a></li>
+      <li><a href="https://www.udemy.com" target="_blank">Udemy</a></li>
+      <li><a href="https://www.youtube.com" target="_blank">YouTube Tutorials</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>📩 Still need help?</h3>
+  <p>Contact our team at <a href="mailto:support@talentrade.com">support@talentrade.com</a></p>
+</div>
+{% endblock %}

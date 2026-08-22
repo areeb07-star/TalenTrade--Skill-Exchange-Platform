@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}TalenTrade{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <a class="brand" href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" 
+           alt="TalenTrade Logo" 
+           style="height:50px; vertical-align: middle;">
+      <span>TalenTrade</span>
+    </a>
+    <nav class="nav-links">
+      <a href="{{ url_for('index') }}">Home</a>
+      {% if session.get('uid') %}
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('register_skill') }}">Add Skills</a>
+        <a href="{{ url_for('receiver') }}">I want to learn</a>
+        <a href="{{ url_for('match') }}">Match</a>
+        <a href="{{ url_for('help_page') }}">Help</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a class="btn small" href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <!-- Motto Section -->
+  <section class="motto">
+    <p>{{ motto }}</p>
+  </section>
+
+  <!-- Main Page Content -->
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 TalenTrade — Connect • Learn • Grow</p>
+  </footer>
+
+  <!-- ===== SOCKET.IO - CDN FIRST ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+  
+  <!-- ===== FALLBACK: LOCAL FILE ===== -->
+  <script>
+    if (typeof io === 'undefined') {
+      var script = document.createElement('script');
+      script.src = "{{ url_for('static', filename='socket.io.min.js') }}";
+      document.head.appendChild(script);
+    }
+  </script>
+  
+  <!-- ===== YOUR CUSTOM JS ===== -->
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+  <script>
+    async function attachSkillAutocomplete(inputId, listId) {
+      const input = document.getElementById(inputId);
+      const list = document.getElementById(listId);
+
+      input.addEventListener("input", async () => {
+        const query = input.value.trim();
+        if (!query) {
+          list.innerHTML = "";
+          return;
+        }
+
+        const res = await fetch(`/search_skill?q=${encodeURIComponent(query)}`);
+        const suggestions = await res.json();
+
+        list.innerHTML = suggestions
+          .map(skill => `<li onclick="selectSkill('${skill}', '${inputId}', '${listId}')">${skill}</li>`)
+          .join("");
+      });
+    }
+
+    function selectSkill(skill, inputId, listId) {
+      document.getElementById(inputId).value = skill;
+      document.getElementById(listId).innerHTML = "";
+    }
+  </script>
+  <!-- Track online status -->
+  {% if session.get('uid') %}
+  <script>
+    const onlineUser = "{{ user.username if user else '' }}";
+
+    function updateOnlineStatus() {
+      fetch('/update_online', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ user: onlineUser })
+      }).catch(e => console.error('Online status error:', e));
+    }
+
+    updateOnlineStatus();
+    setInterval(updateOnlineStatus, 10000);
+
+    window.addEventListener('beforeunload', function() {
+      navigator.sendBeacon('/update_online', JSON.stringify({
+        user: onlineUser,
+        offline: true
+      }));
+    });
+  </script>
+  {% endif %}
+</body>
+</html>

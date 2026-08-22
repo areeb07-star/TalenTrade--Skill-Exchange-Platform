@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Matches | TalenTrade{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Your matches</h2>
+  {% if matches %}
+    <ul class="match-list">
+      {% for m in matches %}
+        <li class="match-card">
+          <div>
+            <h3>@{{ m.username }}</h3>
+
+            {% if m.teach_for_you %}
+              <p><strong>They can teach you:</strong></p>
+              <ul>
+                {% for skill in m.teach_for_you %}
+                  <li>
+                    {{ skill }}
+                    {% if skill in skill_links %}
+                      <div class="links">
+                        <a href="{{ skill_links[skill]['youtube'] }}" target="_blank">📺 YouTube</a>
+                        <a href="{{ skill_links[skill]['course'] }}" target="_blank">📚 Course</a>
+                        <a href="{{ skill_links[skill]['other'] }}" target="_blank">🔗 Other</a>
+                      </div>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+            {% if m.learn_from_you %}
+              <p><strong>They want to learn from you:</strong></p>
+              <ul>
+                {% for skill in m.learn_from_you %}
+                  <li>
+                    {{ skill }}
+                    {% if skill in skill_links %}
+                      <div class="links">
+                        <a href="{{ skill_links[skill]['youtube'] }}" target="_blank">📺 YouTube</a>
+                        <a href="{{ skill_links[skill]['course'] }}" target="_blank">📚 Course</a>
+                        <a href="{{ skill_links[skill]['other'] }}" target="_blank">🔗 Other</a>
+                      </div>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+
+          <div class="actions">
+            <a class="btn small" href="{{ url_for('chat', peer_username=m.username) }}">Message</a>
+            <a class="btn outline small" target="_blank" href="https://meet.jit.si/{{ 'TT-' ~ m.username ~ '-' ~ user.username }}">Start Call</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No matches yet. Try adding more skills!</p>
+  {% endif %}
+</div>
+{% endblock %}

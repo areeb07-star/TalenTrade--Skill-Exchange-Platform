@@ -1,0 +1,262 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg: #fafafa;
+  --card: #ffffff;
+  --text: #333;
+  --muted: #777;
+  --accent: #ff6f61;
+  --accent2: #6c63ff;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 28px; background: var(--card);
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 700; }
+.logo { height: 40px; width: auto; }
+.nav-links a { margin: 0 10px; text-decoration: none; color: #444; font-weight: 600; }
+.nav-links .btn.small { padding: 8px 14px; font-size: .9rem; }
+.nav-links a:hover { color: var(--accent); }
+
+/* Motto */
+.motto { padding: 12px; text-align: center; color: var(--accent2); font-weight: 600; }
+
+/* Container */
+.container { max-width: 1100px; padding: 20px; margin: 0 auto; }
+
+/* Hero */
+.hero {
+  text-align: center; padding: 60px 20px;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  color: #fff; border-radius: 20px;
+}
+.hero h1 { margin: 0 0 10px; font-size: 2.2rem; }
+.hero .cta { margin-top: 10px; }
+
+/* Buttons */
+.btn {
+  display: inline-block; border: none; cursor: pointer;
+  padding: 12px 20px; border-radius: 30px; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), #ff9472);
+  color: #fff; text-decoration: none; transition: .2s transform, .2s box-shadow;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.15); }
+.btn.outline { background: #fff; color: var(--accent); border: 2px solid var(--accent); }
+.btn.small { padding: 8px 14px; border-radius: 20px; }
+
+/* Grid & Cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 18px; margin-top: 24px; }
+.card {
+  background: var(--card); border-radius: 18px; padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+.card.form { max-width: 520px; margin: 0 auto; }
+
+/* Side-by-side inside card */
+.side-by-side {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.half { flex: 1; min-width: 220px; }
+
+/* Lists */
+.quotes { padding-left: 18px; }
+.skills { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { padding: 8px 14px; border-radius: 18px; background: #f1f1ff; color: #444; font-weight: 600; }
+
+/* Forms */
+label { font-weight: 600; }
+input, select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 12px; }
+.alert { background: #ffe8e8; color: #b21c1c; padding: 10px 12px; border-radius: 10px; margin-bottom: 10px; }
+
+/* Suggestions (autocomplete) */
+.suggestions { list-style: none; margin: 6px 0 0; padding: 0; border: 1px solid #eee; border-radius: 10px; max-height: 180px; overflow: auto; }
+.suggestions li { padding: 8px 10px; cursor: pointer; }
+.suggestions li:hover { background: #f6f6ff; }
+
+/* Matches */
+.match-list { list-style: none; padding: 0; margin: 0; }
+.match-card {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--card); padding: 16px; margin: 10px 0; border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
+.match-card .actions .btn.small { margin-left: 8px; }
+
+/* Streaks & Badges */
+.streak { text-align: center; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.badge { background: #ffe9cc; padding: 6px 12px; border-radius: 16px; font-weight: 700; }
+
+/* Chat */
+.chat-box { height: 260px; overflow: auto; background: #fff; border-radius: 12px; padding: 10px; border: 1px solid #eee; margin-bottom: 10px; }
+.msg { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px dashed #f0f0f0; }
+.msg .sender { font-weight: 700; color: var(--accent2); }
+.msg .text { flex: 1; }
+.chat-form { display: flex; gap: 8px; }
+
+/* Footer */
+.footer { padding: 18px; text-align: center; color: var(--muted); }
+
+/* Skill badges (Profile page) */
+.skill-badge {
+  display: inline-block;
+  background: #f0f0f0;
+  color: #333;
+  padding: 6px 10px;
+  margin: 5px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Delete link (text button) */
+.delete-link {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 6px;
+  text-decoration: underline;
+  padding: 0;
+}
+.delete-link:hover { color: darkred; }
+
+/* Flash messages */
+.flash {
+  background: #ffefc5;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+/* ======================================== */
+/* CAPTCHA Styles - Add this to your style.css */
+/* ======================================== */
+
+.captcha-box {
+  background: #f0f6fb;
+  border-radius: 60px;
+  padding: 0.7rem 1.2rem 0.7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 1.8rem 0 1.5rem;
+  border: 1.5px solid #d0dfe9;
+  transition: 0.2s;
+}
+
+.captcha-box:focus-within {
+  border-color: #2a7f6e;
+  box-shadow: 0 0 0 3px rgba(42, 127, 110, 0.08);
+}
+
+.captcha-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1 1 auto;
+}
+
+.captcha-left i {
+  font-size: 1.5rem;
+  color: #2a7f6e;
+}
+
+.captcha-text {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 6px;
+  background: white;
+  padding: 0.2rem 1rem;
+  border-radius: 40px;
+  color: #0b2b40;
+  user-select: none;
+  min-width: 120px;
+  text-align: center;
+  border: 1px solid #cbdde8;
+}
+
+.captcha-input {
+  flex: 1 1 130px;
+  min-width: 110px;
+}
+
+.captcha-input input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid #d0dfe9;
+  border-radius: 60px;
+  font-size: 0.95rem;
+  background: white;
+  transition: 0.15s;
+}
+
+.captcha-input input:focus {
+  outline: none;
+  border-color: #2a7f6e;
+  box-shadow: 0 0 0 3px rgba(42, 127, 110, 0.08);
+}
+
+.captcha-actions button {
+  background: rgba(255,255,255,0.5);
+  border: none;
+  color: #2a5f70;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 30px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.captcha-actions button:hover {
+  background: #d4e3ed;
+  color: #0b2b40;
+  transform: scale(0.95);
+}
+
+.captcha-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.captcha-error {
+  color: #be4b4b;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: -0.8rem 0 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s;
+}
+
+.captcha-error.show {
+  opacity: 1;
+  visibility: visible;
+}

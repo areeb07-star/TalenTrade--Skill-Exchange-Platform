@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Chat with {{ receiver }}</h2>
+
+<div style="border:1px solid #ccc; padding:10px; max-height:300px; overflow-y:scroll;">
+    {% for msg in messages %}
+        <p><b>{{ msg.sender }}:</b> {{ msg.content }} <i>({{ msg.timestamp.strftime('%H:%M') }})</i></p>
+    {% endfor %}
+</div>
+
+<form method="POST" style="margin-top:10px;">
+    <input type="text" name="content" placeholder="Type your message" required>
+    <button type="submit">Send</button>
+</form>
+{% endblock %}

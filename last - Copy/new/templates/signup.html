@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Signup | TalenTrade{% endblock %}
+{% block content %}
+<div class="card form">
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+  <h2>Create your account</h2>
+  <form method="POST">
+    <label>Username</label>
+    <input name="username" required placeholder="choose a username">
+    <label>Email</label>
+    <input type="email" name="email" required placeholder="you@example.com">
+    <label>Password</label>
+    <input type="password" name="password" required placeholder="minimum 6 characters">
+    <button class="btn" type="submit">Sign up</button>
+  </form>
+</div>
+{% endblock %}

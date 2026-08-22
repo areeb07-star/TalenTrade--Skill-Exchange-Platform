@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}I want to learn | TalenTrade{% endblock %}
+{% block content %}
+<div class="card form">
+  <h2>What do you want to learn?</h2>
+  <form method="POST" autocomplete="off">
+    <label>Skill</label>
+    <input id="learn" name="learn" placeholder="Type to search...">
+    <ul id="learnResults" class="suggestions"></ul>
+    <button class="btn" type="submit">Save</button>
+  </form>
+</div>
+<script>
+attachSkillAutocomplete("learn", "learnResults");
+</script>
+{% endblock %}

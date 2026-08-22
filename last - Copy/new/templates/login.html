@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}Login | TalenTrade{% endblock %}
+
+{% block content %}
+<div class="card form">
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    
+    <h2>Welcome back</h2>
+    <p class="subtitle">Enter your credentials to continue</p>
+    
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+            <label>Username</label>
+            <input name="username" required placeholder="your username">
+        </div>
+        
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required placeholder="**********">
+        </div>
+        
+        <!-- ===== CAPTCHA SECTION ===== -->
+        <div class="captcha-box">
+            <div class="captcha-left">
+                <i class="fas fa-shield-alt"></i>
+                <span class="captcha-text" id="captchaText">{{ captcha }}</span>
+            </div>
+            <div class="captcha-input">
+                <input type="text" id="captchaInput" name="captcha_input" placeholder="Enter CAPTCHA" autocomplete="off" required>
+            </div>
+            <div class="captcha-actions">
+                <button type="button" id="refreshCaptcha" title="Refresh CAPTCHA">
+                    <i class="fas fa-sync"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- CAPTCHA Error Message -->
+        <div class="captcha-error" id="captchaError">
+            <i class="fas fa-exclamation-circle"></i> 
+            <span id="captchaErrorMsg">Invalid CAPTCHA</span>
+        </div>
+        <!-- ===== END CAPTCHA ===== -->
+        
+        <button class="btn" type="submit">Login</button>
+    </form>
+    
+    <p class="muted">New here? <a href="{{ url_for('signup') }}">Create an account</a></p>
+</div>
+
+<style>
+/* ===== CAPTCHA STYLES ===== */
+.captcha-box {
+    background: #f5f8fa;
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0 15px 0;
+    border: 2px solid #e1e8ed;
+    transition: 0.3s;
+}
+
+.captcha-box:focus-within {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.captcha-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.captcha-left i {
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.captcha-text {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 8px;
+    background: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    color: #2c3e50;
+    user-select: none;
+    border: 2px solid #dce4ec;
+    min-width: 130px;
+    text-align: center;
+}
+
+.captcha-input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.captcha-input input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #dce4ec;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+    background: white;
+}
+
+.captcha-input input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.captcha-actions button {
+    background: #ecf0f1;
+    border: none;
+    color: #2c3e50;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+}
+
+.captcha-actions button:hover {
+    background: #d5dbdb;
+    transform: scale(0.95);
+}
+
+.captcha-actions button:active {
+    transform: scale(0.9);
+}
+
+.captcha-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.captcha-error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin: -5px 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.captcha-error.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Alert styling */
+.alert-danger {
+    background: #fde8e8;
+    color: #e74c3c;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border-left: 4px solid #e74c3c;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Form group spacing */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #dce4ec;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const refreshBtn = document.getElementById('refreshCaptcha');
+    const captchaText = document.getElementById('captchaText');
+    const captchaInput = document.getElementById('captchaInput');
+    const errorDiv = document.getElementById('captchaError');
+    
+    // Refresh CAPTCHA when button is clicked
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            refreshBtn.disabled = true;
+            
+            // Fetch new CAPTCHA from server
+            fetch('/refresh-captcha')
+                .then(response => response.json())
+                .then(data => {
+                    captchaText.textContent = data.captcha;
+                    captchaInput.value = '';
+                    if (errorDiv) {
+                        errorDiv.classList.remove('show');
+                    }
+                    // Reset button
+                    refreshBtn.innerHTML = '<i class="fas fa-sync"></i>';
+                    refreshBtn.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error refreshing CAPTCHA:', error);
+                    refreshBtn.innerHTML = '<i class="fas fa-sync"></i>';
+                    refreshBtn.disabled = false;
+                });
+        });
+    }
+    
+    // Clear error when user types in CAPTCHA input
+    if (captchaInput) {
+        captchaInput.addEventListener('input', function() {
+            if (errorDiv) {
+                errorDiv.classList.remove('show');
+            }
+        });
+    }
+    
+    // Also clear error when user clicks on CAPTCHA text
+    if (captchaText) {
+        captchaText.addEventListener('click', function() {
+            if (errorDiv) {
+                errorDiv.classList.remove('show');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

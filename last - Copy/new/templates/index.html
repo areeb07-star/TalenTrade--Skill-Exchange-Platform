@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Home | TalenTrade{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <h1>Swap Skills. Build Friendships.</h1>
+  <p>Find peers who can teach you what you want — and learn from you too.</p>
+  <div class="cta">
+    <a class="btn" href="{{ url_for('signup') }}">Get Started</a>
+    <a class="btn outline" href="{{ url_for('match') }}">Find Matches</a>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h3>🌟 What is TalenTrade?</h3>
+    <p>A student-friendly platform to learn & teach skills through peer-to-peer exchange.</p>
+  </div>
+
+  <!-- Combined Inspiring + Popular in one row -->
+  <div class="card flex-col">
+    <div class="side-by-side">
+      <div class="half">
+        <h3>💡 Inspiring Words</h3>
+        <ul class="quotes">
+          <li>“Everyone you meet knows something you don’t.”</li>
+          <li>“Teaching is the best way to learn.”</li>
+          <li>“Share your talent. Grow your world.”</li>
+        </ul>
+      </div>
+      <div class="half">
+        <h3>🔥 Popular Skills</h3>
+        <div class="skills">
+          <span class="chip">Python</span><span class="chip">Graphic Design</span>
+          <span class="chip">Public Speaking</span><span class="chip">Photography</span>
+          <span class="chip">Video Editing</span><span class="chip">Cooking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
