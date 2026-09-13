@@ -1,0 +1,444 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* Global layout */
+    body {
+        background: #f4f7f6; /* Soft professional gray background */
+    }
+
+    .meet-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        gap: 20px;
+        background: transparent;
+    }
+
+    /* Main Stage */
+    .main-stage {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    .video-grid {
+        position: relative;
+        background: #1a1a1a;
+        border-radius: 15px;
+        overflow: hidden;
+        min-height: 500px;
+        flex: 1;
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .remote-video-box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .remote-video-box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .local-video-box {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 160px;
+        height: 120px;
+        border-radius: 12px;
+        border: 3px solid #ff6f61;
+        overflow: hidden;
+        z-index: 10;
+        background: #111;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+    }
+
+    .local-video-box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-label {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        z-index: 10;
+    }
+
+    /* Controls */
+    .controls-bar {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background: white;
+        color: #555;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .control-btn:hover {
+        background: #e9ecef;
+        transform: scale(1.05);
+    }
+
+    .control-btn.off {
+        background: white;
+        color: #ff6f61;
+    }
+
+    .end-btn {
+        background: #e53935;
+        color: white;
+        width: 100px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+    }
+
+    .end-btn:hover {
+        background: #c62828;
+    }
+
+    /* Chat Sidebar */
+    .chat-sidebar {
+        width: 320px;
+        background: white;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    .chat-header {
+        background: #ff6f61;
+        padding: 20px;
+        border-bottom: none;
+        color: white;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.1rem;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #fcfcfc;
+    }
+
+    .chat-msg {
+        max-width: 85%;
+        padding: 10px 15px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        word-wrap: break-word;
+        line-height: 1.4;
+    }
+
+    .chat-msg.mine {
+        align-self: flex-end;
+        background: #ff6f61;
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+
+    .chat-msg.theirs {
+        align-self: flex-start;
+        background: #e9ecef;
+        color: #333;
+        border-bottom-left-radius: 4px;
+    }
+
+    .chat-msg .sender {
+        display: block;
+        font-size: 0.7rem;
+        opacity: 0.8;
+        margin-bottom: 2px;
+    }
+
+    .chat-input {
+        padding: 15px;
+        background: white;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+    }
+
+    .chat-input input {
+        flex: 1;
+        background: #f1f3f5;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 15px;
+        color: #333;
+        outline: none;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .chat-input button {
+        background: #ff6f61;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .chat-input button:hover {
+        background: #e65a4d;
+        transform: scale(1.05);
+    }
+
+    /* Status */
+    #statusText {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.9);
+        color: #333;
+        padding: 10px 25px;
+        border-radius: 20px;
+        font-weight: 600;
+        z-index: 50;
+        display: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Scrollbar */
+    .chat-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 3px;
+    }
+</style>
+
+<div class="meet-container">
+    <div class="main-stage">
+        <div class="video-grid">
+            <div class="remote-video-box">
+                <video id="remoteVideo" autoplay playsinline></video>
+                <div class="video-label">{{ peer }}</div>
+            </div>
+            <div class="local-video-box">
+                <video id="localVideo" autoplay playsinline muted></video>
+                <div class="video-label">{{ user.username }} (You)</div>
+            </div>
+            <div id="statusText">Calling...</div>
+        </div>
+        <div class="controls-bar">
+            <button class="control-btn" id="micBtn" onclick="toggleMute()"><i class="fas fa-microphone"></i></button>
+            <button class="control-btn" id="camBtn" onclick="toggleCamera()"><i class="fas fa-video"></i></button>
+            <button class="control-btn end-btn" onclick="hangUp()"><i class="fas fa-phone-slash"></i> End</button>
+        </div>
+    </div>
+    <div class="chat-sidebar">
+        <div class="chat-header"><i class="fas fa-comments"></i> In-Call Chat</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Send a message..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- PeerJS Library -->
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+
+<script>
+    const myUsername = "{{ user.username }}";
+    const peerUsername = "{{ peer }}";
+    
+    const myPeerID = "user_{{ user.id }}";
+    const targetPeerID = "{{ peer_peer_id }}";
+    
+    let myPeer = null;
+    let currentCall = null;
+    let dataConnection = null;
+    let localStream = null;
+    let isMicOn = true;
+    let isCamOn = true;
+    
+    const chatMessages = document.getElementById('chatMessages');
+    const statusText = document.getElementById('statusText');
+
+    function addMessage(text, sender, isMine) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-msg ${isMine ? 'mine' : 'theirs'}`;
+        msgDiv.innerHTML = `<span class="sender">${sender}</span>${text}`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    myPeer = new Peer(myPeerID);
+
+    myPeer.on('open', function() {
+        statusText.style.display = 'block';
+        statusText.innerText = "Waiting for " + peerUsername + " to join...";
+        
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then(function(stream) {
+            localStream = stream;
+            document.getElementById('localVideo').srcObject = stream;
+            
+            currentCall = myPeer.call(targetPeerID, localStream);
+            dataConnection = myPeer.connect(targetPeerID, { reliable: true });
+            setupDataConnection(dataConnection);
+            handleCallEvents(currentCall);
+        })
+        .catch(function(err) {
+            statusText.innerText = "Error accessing media. Please allow access.";
+        });
+    });
+
+    myPeer.on('call', function(incomingCall) {
+        statusText.style.display = 'block';
+        statusText.innerText = "Incoming call from " + peerUsername;
+        
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then(function(stream) {
+            localStream = stream;
+            document.getElementById('localVideo').srcObject = stream;
+            incomingCall.answer(stream);
+            currentCall = incomingCall;
+            handleCallEvents(currentCall);
+        });
+    });
+
+    myPeer.on('connection', function(conn) {
+        dataConnection = conn;
+        setupDataConnection(conn);
+    });
+
+    function setupDataConnection(conn) {
+        conn.on('open', function() {
+            statusText.style.display = 'none';
+            console.log("Data channel open");
+        });
+        
+        conn.on('data', function(data) {
+            addMessage(data, peerUsername, false);
+        });
+        
+        conn.on('close', function() {
+            handleCallEnd();
+        });
+    }
+
+    function handleCallEvents(call) {
+        call.on('stream', function(remoteStream) {
+            document.getElementById('remoteVideo').srcObject = remoteStream;
+            statusText.style.display = 'none';
+        });
+        
+        call.on('close', function() {
+            handleCallEnd();
+        });
+    }
+
+    function handleCallEnd() {
+        statusText.style.display = 'block';
+        statusText.innerText = "Call ended by " + peerUsername;
+        
+        if (localStream) localStream.getTracks().forEach(track => track.stop());
+        
+        setTimeout(() => { 
+            window.location.href = "{{ url_for('match') }}"; 
+        }, 2000);
+    }
+
+    function toggleMute() {
+        if (localStream) {
+            isMicOn = !isMicOn;
+            localStream.getAudioTracks()[0].enabled = isMicOn;
+            document.getElementById('micBtn').classList.toggle('off', !isMicOn);
+        }
+    }
+
+    function toggleCamera() {
+        if (localStream) {
+            isCamOn = !isCamOn;
+            localStream.getVideoTracks()[0].enabled = isCamOn;
+            document.getElementById('camBtn').classList.toggle('off', !isCamOn);
+        }
+    }
+
+    function hangUp() {
+        statusText.style.display = 'block';
+        statusText.innerText = "Ending call...";
+        
+        if (dataConnection) dataConnection.close();
+        if (currentCall) currentCall.close();
+        if (localStream) localStream.getTracks().forEach(track => track.stop());
+        if (myPeer) myPeer.destroy();
+        
+        setTimeout(() => { 
+            window.location.href = "{{ url_for('match') }}"; 
+        }, 1000);
+    }
+
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, myUsername, true);
+        input.value = '';
+
+        if (dataConnection && dataConnection.open) {
+            dataConnection.send(text);
+        }
+    }
+</script>
+{% endblock %}

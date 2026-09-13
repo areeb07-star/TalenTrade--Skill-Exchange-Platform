@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_from_directory, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, date
@@ -21,6 +21,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
+    points = db.Column(db.Integer, default=0)
 
     teach_skills = db.Column(db.String(300), default="")
     learn_skills = db.Column(db.String(300), default="")
@@ -48,6 +49,17 @@ class Message(db.Model):
     sender = db.Column(db.String(80))
     text = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # Who wrote the review
+    reviewee_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # Who is being reviewed
+    stars = db.Column(db.Integer)  # 1 to 5
+    comment = db.Column(db.String(500))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationship to easily get the reviewer's username
+    reviewer = db.relationship('User', foreign_keys=[reviewer_id])
 
 # ------------------ Sample Data ------------------
 ALL_SKILLS = [
@@ -516,6 +528,7 @@ def match():
         if learn_match or teach_match:
             results.append({
                 "username": c.username,
+                "id": c.id,  # <--- ADDED THIS LINE
                 "teach_for_you": sorted(list(learn_match)),
                 "learn_from_you": sorted(list(teach_match)),
                 "swap_overlap": sorted(list(swap_match))
@@ -566,17 +579,21 @@ def chat(peer_username):
     user = current_user()
     if not user:
         return redirect(url_for("login"))
-    
+
     # Both users get the SAME room name
     room = random_room_for_pair(user.username, peer_username)
     history = Message.query.filter_by(room=room).order_by(Message.timestamp.asc()).limit(50).all()
     
-    return render_template("chat.html", 
-                         room=room, 
-                         peer=peer_username, 
-                         history=history, 
-                         motto=MOTTOS["chat"],
-                         user=user)
+    # NEW: Get the peer user's object to access their ID
+    peer_user = User.query.filter_by(username=peer_username).first()
+
+    return render_template("chat.html",
+                           room=room,
+                           peer=peer_username,
+                           peer_id=peer_user.id,  # <--- ADDED THIS
+                           history=history,
+                           motto=MOTTOS["chat"],
+                           user=user)
 
 @app.route('/get_chat_messages')
 def get_chat_messages():
@@ -596,9 +613,13 @@ def get_chat_messages():
 
 @app.route('/send_chat_message', methods=['POST'])
 def send_chat_message():
-    data = request.get_json()
+    user = current_user()
+    if not user:
+        return jsonify({'success': False, 'error': 'Please log in first'}), 401
+
+    data = request.get_json(silent=True) or {}
     room = data.get('room')
-    sender = data.get('sender')
+    sender = user.username
     text = data.get('text')
     
     if not room or not sender or not text:
@@ -606,6 +627,7 @@ def send_chat_message():
     
     msg = Message(room=room, sender=sender, text=text)
     db.session.add(msg)
+    user.points = (user.points or 0) + 10
     db.session.commit()
     
     return jsonify({'success': True})
@@ -658,7 +680,20 @@ def check_online():
         is_online = False
     
     return jsonify({'online': is_online})
-
+@app.route("/call/<peer_username>")
+def call(peer_username):
+    user = current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    # Get the other user's actual PeerJS ID (which is a random string)
+    peer = User.query.filter_by(username=peer_username).first()
+    if peer:
+        peer_peer_id = "user_" + str(peer.id)  # We use a custom format based on User ID
+    else:
+        peer_peer_id = None
+        
+    return render_template("call.html", peer=peer_username, user=user, peer_peer_id=peer_peer_id)
 # ===== READ RECEIPTS =====
 read_status = {}  # Store read status {room: last_read_message_id}
 
@@ -715,8 +750,50 @@ def init_db():
 
         db.session.commit()
         print("[SUCCESS] Database initialized and default users seeded (if missing).")
+
+# ===== LEADERBOARD ROUTE =====
+@app.route('/leaderboard')
+def leaderboard():
+    # Get the top 10 users with the highest points
+    top_users = User.query.order_by(User.points.desc()).limit(10).all()
+    return render_template('leaderboard.html', top_users=top_users)
+
+# ===== REVIEWS ROUTES =====
+@app.route('/review/<int:user_id>', methods=['GET', 'POST'])
+def review_user(user_id):
+    # Use a different variable name to avoid conflict with the 'user' function
+    target_user = User.query.get_or_404(user_id)
+    
+    # Prevent users from reviewing themselves
+    if target_user.id == current_user().id:
+        flash('You cannot review yourself.', 'danger')
+        return redirect(url_for('profile'))
+        
+    if request.method == 'POST':
+        stars = request.form.get('stars')
+        comment = request.form.get('comment')
+        
+        if stars and comment:
+            new_review = Review(reviewer_id=current_user().id, reviewee_id=target_user.id, stars=int(stars), comment=comment)
+            db.session.add(new_review)
+            
+            # Give the reviewed user +20 points for getting a review!
+            target_user.points = (target_user.points or 0) + 20
+            db.session.commit()
+            
+            flash('Review submitted successfully!', 'success')
+            return redirect(url_for('user_profile', user_id=target_user.id))
+            
+    return render_template('review.html', user=target_user)
+
+@app.route('/user_profile/<int:user_id>')
+def user_profile(user_id):
+    target_user = User.query.get_or_404(user_id)
+    reviews = Review.query.filter_by(reviewee_id=target_user.id).order_by(Review.created_at.desc()).all()
+    return render_template('user_profile.html', user=target_user, reviews=reviews)
+
 if __name__ == "__main__":
     init_db()
     print("\n[INFO] TalentTrade is running!")
     print(" Open your browser at: http://127.0.0.1:5001/\n")
-app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(debug=True, host="0.0.0.0", port=5001)

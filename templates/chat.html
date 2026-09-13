@@ -110,12 +110,18 @@
   <!-- Header -->
   <div style="background: linear-gradient(135deg, #ff6f61, #ff9472); color: white; padding: 15px 20px; border-radius: 15px 15px 0 0;">
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <h2 style="margin: 0;">💬 Chat with {{ peer }}</h2>
+      <h2 style="margin: 0;">💬 Chat with <a href="{{ url_for('user_profile', user_id=peer_id) }}" style="color: white; text-decoration: underline;">{{ peer }}</a></h2>
       <div class="online-status">
         <span class="online-dot offline" id="onlineDot"></span>
         <span id="onlineText">Checking...</span>
       </div>
     </div>
+    
+    <!-- NEW BUTTON ADDED HERE -->
+    <div style="margin-top: 8px;">
+      <a href="{{ url_for('user_profile', user_id=peer_id) }}" style="color: white; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 5px; font-size: 12px; text-decoration: none; display: inline-block;">View Profile & Reviews ⭐</a>
+    </div>
+
     <div id="typingIndicator" style="font-size: 12px; opacity: 0.8; min-height: 18px;"></div>
   </div>
 

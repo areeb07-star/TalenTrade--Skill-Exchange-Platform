@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    /* CSS for the Leaderboard */
+    .leaderboard-wrapper {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .header-section {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .header-section h2 {
+        color: #333;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .header-section p {
+        color: #777;
+        font-size: 1rem;
+    }
+
+    .leaderboard-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+    }
+
+    .leaderboard-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        border-bottom: 1px solid #f5f5f5;
+        transition: all 0.3s ease;
+    }
+
+    .leaderboard-row:hover {
+        background-color: #fafafa;
+    }
+
+    .leaderboard-row:last-child {
+        border-bottom: none;
+    }
+
+    /* Special styling for the top 3 */
+    .leaderboard-row.first-place {
+        background: linear-gradient(90deg, #fff9e6 0%, #ffffff 100%);
+        border-left: 6px solid #FFD700;
+    }
+
+    .leaderboard-row.second-place {
+        background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 100%);
+        border-left: 6px solid #C0C0C0;
+    }
+
+    .leaderboard-row.third-place {
+        background: linear-gradient(90deg, #fdf0e7 0%, #ffffff 100%);
+        border-left: 6px solid #CD7F32;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .rank-badge {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #fff;
+    }
+
+    /* Rank badge colors */
+    .rank-1 { background: #FFD700; box-shadow: 0 4px 10px rgba(255,215,0,0.4); }
+    .rank-2 { background: #C0C0C0; box-shadow: 0 4px 10px rgba(192,192,192,0.4); }
+    .rank-3 { background: #CD7F32; box-shadow: 0 4px 10px rgba(205,127,50,0.4); }
+    .rank-other { background: #e0e0e0; color: #555; }
+
+    .user-details h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .user-details small {
+        color: #999;
+        font-size: 0.85rem;
+    }
+
+    .points-pill {
+        background-color: #FF6B6B;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 10px rgba(255,107,107,0.3);
+    }
+</style>
+
+<div class="leaderboard-wrapper">
+    <div class="header-section">
+        <h2> Global Leaderboard</h2>
+        <p>Top users based on activity points</p>
+    </div>
+
+    <div class="leaderboard-card">
+        {% for user in top_users %}
+        <div class="leaderboard-row 
+            {% if loop.index == 1 %}first-place{% elif loop.index == 2 %}second-place{% elif loop.index == 3 %}third-place{% endif %}">
+            
+            <div class="user-info">
+                <!-- Rank Badge -->
+                <div class="rank-badge 
+                    {% if loop.index == 1 %}rank-1{% elif loop.index == 2 %}rank-2{% elif loop.index == 3 %}rank-3{% else %}rank-other{% endif %}">
+                    {% if loop.index == 1 %}🥇
+                    {% elif loop.index == 2 %}🥈
+                    {% elif loop.index == 3 %}🥉
+                    {% else %}{{ loop.index }}{% endif %}
+                </div>
+                
+                <!-- User Details -->
+                <div class="user-details">
+                    <h4>{{ user.username }}</h4>
+                    <small>Member</small>
+                </div>
+            </div>
+
+            <!-- Points -->
+            <div class="points-pill">
+                {{ user.points }} pts
+            </div>
+        </div>
+        {% else %}
+        <div style="padding: 40px; text-align: center; color: #999;">
+            No users yet! Be the first to earn points.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

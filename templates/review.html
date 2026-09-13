@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .review-wrapper {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .review-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+    }
+
+    .review-header {
+        background: linear-gradient(135deg, #ff6f61, #ff9472);
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .review-header h4 {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .review-body {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+        background-color: #fff;
+        font-family: 'Poppins', sans-serif;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .form-select:focus {
+        border-color: #ff6f61;
+    }
+
+    .form-textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: 'Poppins', sans-serif;
+        outline: none;
+        resize: vertical;
+        min-height: 120px;
+        transition: border-color 0.3s;
+    }
+
+    .form-textarea:focus {
+        border-color: #ff6f61;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%;
+        background: linear-gradient(135deg, #ff6f61, #ff9472);
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(255, 111, 97, 0.3);
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(255, 111, 97, 0.4);
+    }
+</style>
+
+<div class="review-wrapper">
+    <div class="review-card">
+        <div class="review-header">
+            <h4>⭐ Leave a Review for {{ user.username }}</h4>
+        </div>
+        <div class="review-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label>Rating (1-5 Stars)</label>
+                    <select class="form-select" name="stars" required>
+                        <option value="" disabled selected>Select your rating</option>
+                        <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ - Good</option>
+                        <option value="3">⭐⭐⭐ - Average</option>
+                        <option value="2">⭐⭐ - Below Average</option>
+                        <option value="1">⭐ - Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Your Comment</label>
+                    <textarea class="form-textarea" name="comment" rows="4" placeholder="How was your experience with this user?" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

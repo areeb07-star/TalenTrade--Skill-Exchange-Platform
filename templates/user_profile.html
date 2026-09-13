@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5" style="max-width: 700px;">
+    <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+            <h3 class="mb-1">{{ user.username }}</h3>
+            <p class="text-muted">Member</p>
+            
+            <!-- Average Rating Display -->
+            {% if reviews %}
+                {% set total_stars = reviews|sum(attribute='stars') %}
+                {% set avg = (total_stars / reviews|length) | round(1) %}
+                <p class="mb-2"><strong>{{ avg }}</strong> / 5.0 ⭐ ({{ reviews|length }} reviews)</p>
+            {% else %}
+                <p class="text-muted">No reviews yet.</p>
+            {% endif %}
+            
+            <a href="{{ url_for('review_user', user_id=user.id) }}" class="btn btn-primary mt-2">Leave a Review</a>
+        </div>
+    </div>
+
+    <h4 class="mb-3">Recent Reviews</h4>
+    {% for review in reviews %}
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">
+                {{ review.reviewer.username }} 
+                <span class="text-warning">
+                    {% for i in range(review.stars) %}⭐{% endfor %}
+                </span>
+            </h6>
+            <p class="card-text">{{ review.comment }}</p>
+            <small class="text-muted">{{ review.created_at.strftime('%Y-%m-%d') }}</small>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No reviews have been left for this user yet.</div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -33,8 +33,9 @@
         <a href="{{ url_for('register_skill') }}">Add Skills</a>
         <a href="{{ url_for('receiver') }}">I want to learn</a>
         <a href="{{ url_for('match') }}">Match</a>
+        <!-- New Leaderboard Link Added -->
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
         <a href="{{ url_for('help_page') }}">Help</a>
-        <a href="{{ url_for('login') }}">Login</a>
         <a href="{{ url_for('logout') }}">Logout</a>
       {% else %}
         <a href="{{ url_for('login') }}">Login</a>
