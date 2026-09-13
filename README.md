@@ -25,7 +25,9 @@ Everyone has something valuable to share.
 A person may know **Python** but want to learn **UI Design**.  
 Someone else may know **UI Design** but want to learn **Python**.
 
-TalenTrade brings these complementary skills together and creates opportunities for people to learn from one another.
+**TalenTrade brings these complementary skills together.**
+
+The goal is simple:
 
 > **Turn individual knowledge into collective growth.**
 
@@ -51,62 +53,79 @@ TalenTrade brings these complementary skills together and creates opportunities 
                             │
                             ▼
                            Grow
-✨ Core Features
-👤 User Authentication
+```
+
+---
+
+## ✨ Core Features
+
+### 👤 User Authentication
 
 Create an account, log in, and access a personalized experience.
 
-🧑‍💻 Skill Profiles
+### 🧑‍💻 Skill Profiles
 
 Showcase your expertise and the skills you are interested in learning.
 
-➕ Skill Management
+### ➕ Skill Management
 
 Add and manage the skills you can offer to other members.
 
-🔍 Skill Discovery
+### 🔍 Skill Discovery
 
 Explore skills shared by other users and discover new learning opportunities.
 
-🔄 Skill Exchange
+### 🔄 Skill Exchange
 
 Find users with complementary skills and create mutually beneficial learning connections.
 
-💬 Real-Time Communication
+### 💬 Real-Time Communication
 
 Connect and communicate with other users through real-time messaging powered by WebSockets.
 
-📚 Learning Resources
+### 📚 Learning Resources
 
-Access relevant resources to support continuous learning and skill development.
+Discover relevant resources to support continuous learning and skill development.
 
-📱 Responsive Interface
+### 📱 Responsive Interface
 
 Designed to provide a consistent experience across desktop and mobile devices.
 
-🚀 How It Works
-01  Create
-    Build your profile and showcase what you know.
+---
 
-02  Discover
-    Explore skills and learning interests within the community.
+## 🚀 How It Works
 
-03  Connect
-    Find people with complementary skills.
+### 01 — Create
 
-04  Exchange
-    Share your knowledge while learning something new.
+Build your profile and showcase what you know.
 
-05  Grow
-    Build skills, relationships, and opportunities.
-The TalenTrade Cycle
+### 02 — Discover
 
+Explore skills and learning interests within the community.
+
+### 03 — Connect
+
+Find people with complementary skills.
+
+### 04 — Exchange
+
+Share your knowledge while learning something new.
+
+### 05 — Grow
+
+Build skills, connections, and opportunities.
+
+```text
 Create → Discover → Connect → Exchange → Grow
+```
 
-🧩 The Concept
+---
+
+## 🧩 The Concept
 
 TalenTrade is built around a simple principle:
 
+```text
                  I CAN TEACH
                       │
                       ▼
@@ -116,22 +135,32 @@ TalenTrade is built around a simple principle:
                       ▲
                       │
                 I WANT TO LEARN
+```
 
-Knowledge does not always need to come from a classroom or a course.
+Knowledge does not always have to come from a classroom or a traditional course.
 
-Sometimes, the most valuable learning experience begins with another person.
+Sometimes, the most valuable learning experience begins with **another person**.
 
-🛠️ Technology Stack
-Layer	Technologies
-Frontend	HTML5, CSS3, JavaScript
-Backend	Python, Flask
-Database	SQLite
-ORM	Flask-SQLAlchemy, SQLAlchemy
-Real-Time Communication	Flask-SocketIO, WebSockets
-Application Server	Gunicorn
-Deployment	Render
-Version Control	Git, GitHub
-🏗️ Architecture
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Python, Flask |
+| Database | SQLite |
+| ORM | Flask-SQLAlchemy, SQLAlchemy |
+| Real-Time Communication | Flask-SocketIO, WebSockets |
+| Application Server | Gunicorn |
+| Deployment | Render |
+| Version Control | Git, GitHub |
+
+---
+
+## 🏗️ Architecture
+
+```text
                          TalenTrade
                               │
                  ┌────────────┴────────────┐
@@ -145,7 +174,13 @@ Version Control	Git, GitHub
                               │                         │
                               ▼                         ▼
                            SQLite                  WebSockets
-📁 Project Structure
+```
+
+---
+
+## 📁 Project Structure
+
+```text
 TalenTrade/
 │
 ├── app.py
@@ -168,34 +203,68 @@ TalenTrade/
     ├── signup.html
     ├── profile.html
     └── ...
-⚙️ Getting Started
-Prerequisites
+```
 
-Make sure you have the following installed:
+---
 
-Python 3.13+
-Git
-pip
-1. Clone the Repository
+## ⚙️ Getting Started
+
+### Prerequisites
+
+Make sure the following are installed:
+
+- Python 3.13+
+- Git
+- pip
+
+### 1. Clone the Repository
+
+```bash
 git clone https://github.com/areeb07-star/TalenTrade--Skill-Exchange-Platform.git
 cd TalenTrade--Skill-Exchange-Platform
-2. Create a Virtual Environment
-Windows
+```
+
+### 2. Create a Virtual Environment
+
+#### Windows
+
+```bash
 python -m venv venv
 venv\Scripts\activate
-macOS / Linux
+```
+
+#### macOS / Linux
+
+```bash
 python -m venv venv
 source venv/bin/activate
-3. Install Dependencies
+```
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-4. Start the Application
+```
+
+### 4. Start the Application
+
+```bash
 python app.py
-5. Open in Your Browser
+```
+
+### 5. Open in Your Browser
+
+```text
 http://127.0.0.1:5001/
-☁️ Deployment
+```
 
-TalenTrade is deployed as a Flask web application using Render and Gunicorn.
+---
 
+## ☁️ Deployment
+
+TalenTrade is deployed as a Flask web application using **Render** and **Gunicorn**.
+
+```text
 GitHub
    │
    ▼
@@ -210,64 +279,77 @@ Flask Application
    ├── SQLite
    │
    └── WebSockets
-Production Application
+```
+
+### Production Application
 
 https://talentrade--skill-exchange-platform.onrender.com
 
-🔐 Security
+---
+
+## 🔐 Security
 
 TalenTrade follows standard web application practices, including:
 
-User authentication
-Session management
-Password protection
-Server-side validation
-Environment-based configuration
-Database-backed application data
+- User authentication
+- Session management
+- Password protection
+- Server-side validation
+- Environment-based configuration
+- Database-backed application data
 
 Sensitive configuration values should be managed through environment variables and should not be committed to the repository.
 
-🌍 Use Cases
-Students
+---
+
+## 🌍 Use Cases
+
+### Students
 
 Exchange technical, academic, creative, and communication skills.
 
-Professionals
+### Professionals
 
 Share expertise and discover complementary knowledge.
 
-Creators
+### Creators
 
 Find people with different skill sets and explore collaboration opportunities.
 
-Mentors & Learners
+### Mentors & Learners
 
 Create meaningful peer-to-peer learning relationships.
 
-Communities
+### Communities
 
-Build an environment where knowledge and expertise can be shared.
+Build environments where knowledge and expertise can be shared.
 
-📈 Future Roadmap
+---
 
-TalenTrade can evolve with features such as:
+## 📈 Future Roadmap
 
- AI-powered skill matching
- Personalized skill recommendations
- Ratings and reviews
- Skill verification
- Achievements and badges
- Workshop and session scheduling
- Notifications
- Video-based learning
- Learning progress tracking
- Location-based matching
- PostgreSQL integration
- Mobile application
-🔮 Vision
+The platform can be expanded with:
 
-The long-term vision of TalenTrade is to build a collaborative ecosystem where people can transform their knowledge into opportunities.
+- [ ] AI-powered skill matching
+- [ ] Personalized skill recommendations
+- [ ] Ratings and reviews
+- [ ] Skill verification
+- [ ] Achievements and badges
+- [ ] Workshop and session scheduling
+- [ ] Notifications
+- [ ] Video-based learning
+- [ ] Learning progress tracking
+- [ ] Location-based matching
+- [ ] PostgreSQL integration
+- [ ] Mobile application
 
+---
+
+## 🔮 Vision
+
+The long-term vision of TalenTrade is to create a collaborative ecosystem where people can transform knowledge into opportunities.
+
+```text
 Learn
   ↓
 Build Skills
@@ -279,32 +361,41 @@ Connect With People
 Discover Opportunities
   ↓
 Grow Together
+```
 
-Knowledge is the starting point.
-Collaboration is what turns it into growth.
+> **Knowledge is the starting point.  
+> Collaboration is what turns it into growth.**
 
-🤝 Contributing
+---
+
+## 🤝 Contributing
 
 Contributions and ideas are welcome.
 
-Development Workflow
+### Development Workflow
+
+```bash
 git checkout -b feature/your-feature
 git add .
 git commit -m "Add your feature"
 git push origin feature/your-feature
+```
 
 Then open a Pull Request.
 
-📜 License
+---
+
+## 📜 License
 
 Copyright © 2026 TalenTrade. All rights reserved.
 
 This repository and its source code are proprietary. Unauthorized reproduction, distribution, modification, or commercial use is prohibited without prior written permission from the project owners.
 
-TalenTrade
+---
 
-Exchange Skills. Expand Possibilities.
+## TalenTrade
 
-A platform built around a simple idea:
+**Exchange Skills. Expand Possibilities.**
 
-Everyone knows something. Everyone can learn something.
+> Everyone knows something.  
+> Everyone can learn something.
