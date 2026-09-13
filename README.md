@@ -13,9 +13,6 @@ Instead of treating learning as a one-way process, TalenTrade creates a collabor
 **Live Application:**  
 https://talentrade--skill-exchange-platform.onrender.com
 
-**GitHub Repository:**  
-https://github.com/areeb07-star/TalenTrade--Skill-Exchange-Platform
-
 ---
 
 ## ✦ Why TalenTrade?
@@ -280,11 +277,6 @@ Flask Application
    │
    └── WebSockets
 ```
-
-### Production Application
-
-https://talentrade--skill-exchange-platform.onrender.com
-
 ---
 
 ## 🔐 Security
@@ -331,14 +323,6 @@ Build environments where knowledge and expertise can be shared.
 The platform can be expanded with:
 
 - [ ] AI-powered skill matching
-- [ ] Personalized skill recommendations
-- [ ] Ratings and reviews
-- [ ] Skill verification
-- [ ] Achievements and badges
-- [ ] Workshop and session scheduling
-- [ ] Notifications
-- [ ] Video-based learning
-- [ ] Learning progress tracking
 - [ ] Location-based matching
 - [ ] PostgreSQL integration
 - [ ] Mobile application
