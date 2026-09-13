@@ -4,7 +4,7 @@
 
 TalenTrade is a skill exchange platform designed to connect people through the knowledge they have and the skills they want to learn.
 
-Instead of treating learning as a one-way process, TalenTrade creates a collaborative environment where every user can be both a **learner and a contributor**.
+Instead of treating learning as a one-way process, TalenTrade creates a collaborative environment where every user can be both a learner and a contributor.
 
 ---
 
@@ -19,8 +19,8 @@ https://talentrade--skill-exchange-platform.onrender.com
 
 Everyone has something valuable to share.
 
-A person may know **Python** but want to learn **UI Design**.  
-Someone else may know **UI Design** but want to learn **Python**.
+A person may know Python but want to learn UI Design.  
+Someone else may know UI Design but want to learn Python.
 
 **TalenTrade brings these complementary skills together.**
 
