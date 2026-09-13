@@ -1,4 +1,4 @@
-# TalenTrade
+# TalenTrade 
 
 ### Exchange Skills. Expand Possibilities.
 
