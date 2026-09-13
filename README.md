@@ -39,13 +39,13 @@ Another person might know UI design but want to learn Python.
               Share • Learn
                      │
                      ▼
-                   Grow
+                   Grow'''
 
 The goal is simple:
 
 Turn individual knowledge into collective growth.
 
-##✨ Core Features
+## ✨ Core Features
 Feature	Description
 Authentication	Create an account and securely access the platform
 Profiles	Showcase skills, interests, and expertise
@@ -56,7 +56,7 @@ Real-Time Chat	Communicate with other users using WebSockets
 Learning Resources	Discover resources to continue developing your skills
 Responsive UI	Designed for desktop and mobile experiences
 
-##🔄 How It Works
+## 🔄 How It Works
 01 — Create
 
 Create your profile and tell the community what you know.
@@ -79,7 +79,7 @@ Build skills, connections, and opportunities through continuous learning.
 
 Create → Discover → Connect → Exchange → Grow
 
-##🧩 The Concept
+## 🧩 The Concept
 
 TalenTrade is built around a simple principle:
 
@@ -98,7 +98,7 @@ A skill does not have to be bought to be valuable.
 
 Sometimes, the best resource is another person.
 
-##🛠️ Technology Stack
+## 🛠️ Technology Stack
 Frontend
 HTML5
 CSS3
@@ -121,7 +121,7 @@ Development
 Git
 GitHub
 
-##🏗️ Architecture
+## 🏗️ Architecture
                          TalenTrade
                              │
                 ┌────────────┴────────────┐
@@ -136,7 +136,7 @@ GitHub
                          ▼                                ▼
                       SQLite                         WebSockets
 
-##📁 Project Structure
+## 📁 Project Structure
 TalenTrade/
 │
 ├── app.py
@@ -160,7 +160,7 @@ TalenTrade/
     ├── profile.html
     └── ...
 
-##🚀 Getting Started:
+## 🚀 Getting Started:
 Prerequisites
 Python 3.13+
 Git
@@ -170,12 +170,12 @@ git clone https://github.com/areeb07-star/TalenTrade--Skill-Exchange-Platform.gi
 cd TalenTrade--Skill-Exchange-Platform
 Create a Virtual Environment
 
-###Windows:
+### Windows:
 
 python -m venv venv
 venv\Scripts\activate
 
-###macOS / Linux:
+### macOS / Linux:
 
 python -m venv venv
 source venv/bin/activate
@@ -209,7 +209,7 @@ Production URL
 
 https://talentrade--skill-exchange-platform.onrender.com
 
-##🔐 Security
+## 🔐 Security
 
 The application follows standard web application practices including:
 
@@ -221,7 +221,7 @@ Database-backed application data
 
 Production deployments can be further strengthened with managed databases, rate limiting, enhanced authentication, centralized logging, and additional security controls.
 
-##🌍 Potential Impact
+## 🌍 Potential Impact
 
 TalenTrade can support different types of users:
 
@@ -240,7 +240,7 @@ Create meaningful peer-to-peer learning relationships.
 Communities
 Build environments where knowledge can circulate freely.
 
-##🔮 Roadmap
+## 🔮 Roadmap
 
 The platform can evolve with features such as:
 
@@ -257,7 +257,7 @@ The platform can evolve with features such as:
  PostgreSQL integration
  Mobile application
 
-##📈 Future Vision
+## 📈 Future Vision
 
 TalenTrade is designed with the potential to grow beyond a simple skill-sharing platform.
 
@@ -275,7 +275,7 @@ Discover opportunities
 
 A platform where knowledge is the currency and collaboration is the engine for growth.
 
-##🤝 Contributing
+## 🤝 Contributing
 
 Contributions and ideas are welcome.
 
@@ -287,7 +287,7 @@ git push origin feature/your-feature
 
 Then open a Pull Request.
 
-##📜 License
+## 📜 License
 
 Copyright © 2026 TalenTrade. All rights reserved.
 
