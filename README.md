@@ -10,7 +10,7 @@ Instead of simply consuming knowledge, TalenTrade turns learning into a two-way 
 
 ## 🌐 Live Platform
 
-**Live:** https://talentrade--skill-exchange-platform.onrender.com
+**Live:** https://talentrade-skill-exchange-platform.onrender.com
 
 **Repository:** https://github.com/areeb07-star/TalenTrade--Skill-Exchange-Platform
 
